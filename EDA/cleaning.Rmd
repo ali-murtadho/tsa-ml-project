@@ -1,6 +1,8 @@
 ---
 title: "data-preprocessing-data-banjir-jakarta-2023_2020"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 #Install Library
 ```{r setup, include=FALSE}
