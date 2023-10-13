@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#Exploratory Data Analysis
+```{r}
+df_new <- read.csv(file="https://raw.githubusercontent.com/ali-murtadho/tsa-ml-project/master/data_banjir_clean.csv", header = T, sep = ",")
+```
+
+```{r}
+str(df_new) 
+```
+
+```{r}
+#Correlation Matrix
+avgAir<- hist(df_new$avg_ketinggian_air, main = "Rata-rata ketinggian Air", xlab = "Rata-rata ketinggian air", freq = FALSE, breaks = 15)
+
+avgAir$breaks
+avgAir$counts
+avgAir$mids
+```
+```{r}
+boxplot(df_new$avg_ketinggian_air, horizontal = TRUE, main = "Boxplot Rata Ketinggian Air", xlab = "Rata Ketinggian Air")
+```
+

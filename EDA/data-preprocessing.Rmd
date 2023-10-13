@@ -369,3 +369,5 @@ df_clean$total_rw <- sapply(strsplit(df_clean$rw, ","), function(x) length(x))
 write.csv(df_clean, file = "data_banjir_clean.csv", row.names = FALSE)
 ```
 
+
+
