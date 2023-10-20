@@ -24,3 +24,65 @@ avgAir$mids
 boxplot(df_new$avg_ketinggian_air, horizontal = TRUE, main = "Boxplot Rata Ketinggian Air", xlab = "Rata Ketinggian Air")
 ```
 
+```{r}
+hist(df_new$total_kejadian)
+```
+
+```{r}
+plot(df_new$avg_ketinggian_air, main = "sebaran rata ketinggian air")
+```
+```{r}
+null_ketinggian_air <- df_new[is.na(df_new$avg_ketinggian_air), ]
+null_ketinggian_air
+```
+```{r}
+# Menghapus kolom dengan nilai null pada kolom "avg_ketinggian_air"
+df_new_clean <- subset(df_new, !is.na(avg_ketinggian_air))
+```
+
+```{r}
+# Menyimpan df_new_clean ke dalam file CSV
+write.csv(df_new_clean, file = "df_new_clean.csv", row.names = FALSE)
+
+```
+
+```{r}
+# Menghitung Q1 dan Q3
+Q1_avg_air <- quantile(df_new_clean$avg_ketinggian_air, 0.25)
+Q3_avg_air <- quantile(df_new_clean$avg_ketinggian_air, 0.75)
+
+# Menghitung IQR
+IQR_avg_air <- Q3_avg_air - Q1_avg_air
+
+# Menentukan batas bawah dan batas atas
+lower_bound_avg_air <- Q1_avg_air - 1.5 * IQR_avg_air
+upper_bound_avg_air <- Q3_avg_air + 1.5 * IQR_avg_air
+
+# Mengidentifikasi outlier
+outliers_avg_air <- df_new_clean$avg_ketinggian_air[df_new_clean$avg_ketinggian_air < lower_bound_avg_air | df_new_clean$avg_ketinggian_air > upper_bound_avg_air]
+
+# Menampilkan outlier
+print(outliers_avg_air)
+
+```
+
+```{r}
+# Menghitung Q1 dan Q3
+Q1_total_kejadian <- quantile(df_new_clean$total_kejadian, 0.25)
+Q3_total_kejadian <- quantile(df_new_clean$total_kejadian, 0.75)
+
+# Menghitung IQR
+IQR_total_kejadian <- Q3_total_kejadian - Q1_total_kejadian
+
+# Menentukan batas bawah dan batas atas
+lower_bound_total_kejadian <- Q1_total_kejadian - 1.5 * IQR_total_kejadian
+upper_bound_total_kejadian <- Q3_total_kejadian + 1.5 * IQR_total_kejadian
+
+# Mengidentifikasi outlier
+outliers_total_kejadian <- df_new_clean$total_kejadian[df_new_clean$total_kejadian < lower_bound_total_kejadian | df_new_clean$total_kejadian > upper_bound_total_kejadian]
+
+# Menampilkan outlier
+print(outliers_total_kejadian)
+
+```
+
