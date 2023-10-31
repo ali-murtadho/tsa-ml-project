@@ -1,0 +1,54 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+dm <- read.csv("https://raw.githubusercontent.com/ali-murtadho/tsa-ml-project/master/EDA/df_new_clean.csv")
+```
+
+```{r}
+str(dm)
+```
+
+```{r}
+dm_model <- dm[, c(14,15,18)]
+```
+
+```{r}
+dm_model.stdz <- scale(dm_model)
+apply(dm_model.stdz, 2, mean)
+```
+```{r}
+install.packages("factoextra")
+library(factoextra)
+```
+
+```{r}
+kmeans_model <- eclust(dm_model, stand = TRUE, FUNcluster = "kmeans", k=3, graph = T)
+```
+
+```{r}
+table(kmeans_model$cluster)
+```
+
+```{r}
+kmeans_model$centers
+```
+
+```{r}
+aggregate(dm_model,by=list(cluster=kmeans_model$cluster),FUN = mean)
+```
+
+```{r}
+fviz_cluster(kmeans_model)
+```
+```{r}
+# load required packages
+library(factoextra)
+library(NbClust)
+
+# Elbow method
+fviz_nbclust(dm_model, kmeans, method = "wss") + geom_vline(xintercept = 3, linetype = 2) + labs(subtitle = "Elbow method")
+```
+
